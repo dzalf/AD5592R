@@ -1,0 +1,16 @@
+{
+  "name": "AD5592R",
+  "keywords": "analog, dac, devices, ads, ad5592r, spi",
+  "description": "Control library for the AD5592R by Analog Devices Inc.",
+  "repository":
+  {
+    "type": "git",
+    "url": "https://github.com/dzalf/AD5592R.git"
+  },
+  "frameworks": "arduino",
+  "platforms":
+  [
+    "atmelavr",
+	"teensy"
+  ]
+}
