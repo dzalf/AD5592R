@@ -12,6 +12,8 @@ Examples based on (or ported to) this implementation are provided.
 
 Tested on Arduino and Teensy platforms.
 
+Note: My original [fork](https://github.com/dzalf/Arduino-libad5592r) simply implements small changes to make the SS pin selectable for boards like Teensy, and provides an additional example. I will not be making changes to that fork anymore and leave new additions here.
+
 #TODO:
 
 - Invite @Metaln00b as a collaborator just to get _their_ blessing/approval
