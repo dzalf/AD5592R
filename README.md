@@ -1,4 +1,5 @@
 #AD5592R 
+
 ##8-Channel, 12-Bit, Configurable ADC/DAC with On-Chip Reference, SPI Interface
 
 My take on the AD5592R control library originally developed by @Metaln00b.
