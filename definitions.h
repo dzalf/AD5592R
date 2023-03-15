@@ -6,10 +6,10 @@
 #define DAC_DEBUG       true
 
 /*******************************************************************************
-* Konstanten                                                                   *
-*******************************************************************************/
+ * Constants                                                                   *
+ *******************************************************************************/
 
-/* Bauteilspezifische Formeln für internen Temperatursensor */
+/* Component-specific formulas for internal temperature sensor */
 #define AD5592R_TEMPERATURE_FORMULA_GAIN1(temp_raw, vref_mV) \
 25 + ( (temp_raw - (0.5 / (vref_mV/1000)) * AD5592R_SAMPLE_CODE_MAX) / (2.654 * (2.5 / (vref_mV/1000))) )
 
@@ -19,7 +19,7 @@
 // ********************************* PUBLIC ********************************
 
 /*******************************************************************************
- * Konstanten                                                                  *
+ * Constants                                                                  *
  ******************************************************************************/
 
 #define AD5592R_CHANNEL_COUNT       8
@@ -29,16 +29,16 @@
 #define AD5592R_INT_REF_mV          2500
 #define AD5592R_MIN_EXT_REF_mV      1000
 
-#define AD5592R_MIN_VDD_mV          2700 /* Minimale Versorgungsspannung */
-#define AD5592R_MAX_VDD_mV          5500 /* Maximale Versorgungsspannung */
+#define AD5592R_MIN_VDD_mV          2700 /* Minimum supply voltage */
+#define AD5592R_MAX_VDD_mV          5500 /* Maximum supply voltage*/
 
 #define AD5592R_SAMPLE_CODE_MIN     0
 #define AD5592R_SAMPLE_CODE_MAX     4095
 
 #define AD5592R_IO(pin)             (1<<pin)
 
-// ********************************* PRIVATE ****************************
-/* Kontrollregister Definitionen */
+// ********************************* PRIVATE *******************************
+/* Control-registers */
 #define AD5592R_CNTRL_ADDRESS_MASK      0x7800  /* Control register bit mask */
 
 #define AD5592R_CMD_NOP                 0x0000  /* No operation */
@@ -60,12 +60,12 @@
 
 #define AD5592R_PIN_SELECT_MASK         0x00FF  /* Pin select bit mask */
 
-/* DAC Register Definitionen */
+/* DAC registers */
 #define AD5592R_DAC_WRITE_MASK          0x8000  /* DAC write bit mask */
 #define AD5592R_DAC_ADDRESS_MASK        0x7000  /* DAC pin address bit mask */
 #define AD5592R_DAC_VALUE_MASK          0x0FFF  /* DAC output value bit mask */
 
-/* Range Selection 2xVref */
+/* Range selection 2xVref */
 #define AD5592R_ADC_TT_VREF             0x0010  /* Set ADC input range to 2 times Vref */
 #define AD5592R_DAC_TT_VREF             0x0020  /* Set DAC output range to 2 times Vref */
 

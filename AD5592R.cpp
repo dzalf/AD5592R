@@ -1,21 +1,18 @@
 
 #include "AD5592R.h"
 
-AD5592R::AD5592R(uint8_t pinSS){		// Constructor
-	
+AD5592R::AD5592R(uint8_t pinSS)     // Constructor
+{
     _syncPin = pinSS;
-    
 } 
 
 void AD5592R::init()
 {
-   
     SPI.begin();
 
-        // Teensy can go faster. The DAC is comfy at 10 MHz
-        SPI.beginTransaction(SPISettings(10000000, MSBFIRST, SPI_MODE1)); 
-        pinMode(_syncPin, OUTPUT);      // Worked on tempe Readin example!
-  
+    // Teensy can go faster. The DAC is comfy at 10 MHz
+    SPI.beginTransaction(SPISettings(10000000, MSBFIRST, SPI_MODE1)); 
+    pinMode(_syncPin, OUTPUT);      // Worked on tempe Readin example!
 }
 
 void AD5592R::reset()
@@ -26,7 +23,7 @@ void AD5592R::reset()
 
 
 /*******************************************************************************
- * Hilfsfunktionen                                                             *
+ * Auxiliary functions                                                         *
  ******************************************************************************/
 
 uint16_t AD5592R::analog_2_digital(double voltage_mV, bool double_vref)
@@ -135,7 +132,7 @@ uint8_t AD5592R::macro_2_pin(uint8_t macro)
 }
 
 /*******************************************************************************
- * Kommunikation                                                               *
+ * Communication                                                               *
  ******************************************************************************/
 
 bool AD5592R::comm(AD5592R_word sixteen_bits, uint8_t *rx_data)
@@ -162,16 +159,16 @@ bool AD5592R::comm(AD5592R_word sixteen_bits, uint8_t *rx_data)
     Serial.println(rx_data[1], HEX);
 #endif
 
-    #ifdef CORE_TEENSY
-        digitalWrite(_syncPin, HIGH);  //SS
-    #else
-        digitalWrite(SS,HIGH);
-    #endif
+#ifdef CORE_TEENSY
+    digitalWrite(_syncPin, HIGH);  // SS
+#else
+    digitalWrite(SS,HIGH);
+#endif
     return true;
 }
 
 /*******************************************************************************
- * Allgemeine Konfiguration                                                    *
+ * Primary configuration                                                       *
  ******************************************************************************/
 
 uint8_t AD5592R::register_readback(AD5592R_reg_readback_t reg){
@@ -180,7 +177,7 @@ uint8_t AD5592R::register_readback(AD5592R_reg_readback_t reg){
     comm(AD5592R_CMD_CNTRL_REG_READBACK | 0x41 | (reg << 2), receive);
     comm(AD5592R_CMD_NOP, receive);
 
-    setup_ldac(_ldac_mode);   /* Alten LDAC-Modus wiederherstellen */
+    setup_ldac(_ldac_mode);   /* Restore old LDAC-mode */
 
     return receive[1];
 }
@@ -282,7 +279,7 @@ bool AD5592R::setup_double_vref_dac_get()
 
 
 /*******************************************************************************
- * Pin Konfiguration                                                           *
+ * PIN configuration                                                           *
  ******************************************************************************/
 
 void AD5592R::setup_ldac(AD5592R_ldac_mode_t ldac_mode)
@@ -566,7 +563,7 @@ uint16_t AD5592R::adc_sample_get(uint8_t pin)
     comm(AD5592R_CMD_NOP, receive);
     comm(AD5592R_CMD_NOP, receive);
 
-    /* Verwirft das erste Nibble */
+    /* Discard the first nibble */
     uint16_t result = ((receive[0] << 8) & 0x0F00) | (receive[1] & 0xFF);
 
     return result;
@@ -582,7 +579,7 @@ double AD5592R::adc_voltage_get_mV(uint8_t pin)
     comm(AD5592R_CMD_NOP, receive);
     comm(AD5592R_CMD_NOP, receive);
 
-    /* Verwirft das erste Nibble */
+    /* Discard the first nibble */
     uint16_t result = ((receive[0] << 8) & 0x0F00) | (receive[1] & 0xFF);
 
     return digital_2_analog(result, setup_double_vref_adc_get());
@@ -601,9 +598,9 @@ bool AD5592R::dac_sample_set(uint8_t pin, uint16_t sample)
 
     if (sample <= AD5592R_SAMPLE_CODE_MAX)
     {
-        comm(AD5592R_DAC_WRITE_MASK |                            /* DAC Schreibbefehl */
-            ( (pin << 12) & AD5592R_DAC_ADDRESS_MASK ) |        /* DAC-Pin(Adresse) & DAC-Addressmaske */
-            sample,                                             /* Digitalwert */
+        comm(AD5592R_DAC_WRITE_MASK |                           /* DAC write command */
+            ( (pin << 12) & AD5592R_DAC_ADDRESS_MASK ) |        /* DAC-PIN (address) & DAC addressmask */
+            sample,                                             /* Digital value */
         receive);
 
         _io_setting[pin].dac.sample = sample;
@@ -629,9 +626,9 @@ bool AD5592R::dac_voltage_set_mV(uint8_t pin, double voltage_mV)
     if (voltage_mV <= supply_voltage_mV)
     {
         result = analog_2_digital(voltage_mV, setup_double_vref_dac_get());
-        comm(AD5592R_DAC_WRITE_MASK |                            /* DAC Schreibbefehl */
-            ( (pin << 12) & AD5592R_DAC_ADDRESS_MASK ) |        /* DAC-Pin(Adresse) & DAC-Addressmaske */
-            result,                                             /* Digitalwert */
+        comm(AD5592R_DAC_WRITE_MASK |                           /* DAC write command */
+            ( (pin << 12) & AD5592R_DAC_ADDRESS_MASK ) |        /* DAC-PIN (address) & DAC addressmask */
+            result,                                             /* Digital value */
             receive);
 
         _io_setting[pin].dac.sample = result;
@@ -676,7 +673,7 @@ uint16_t AD5592R::dac_sample_get(uint8_t pin)
 
 
 /*******************************************************************************
- * Sonstige                                                                    *
+ * Miscellaneous functions                                                     *
  ******************************************************************************/
 
 double AD5592R::temperature_get_degC()
@@ -691,7 +688,7 @@ double AD5592R::temperature_get_degC()
     comm(AD5592R_CMD_NOP, receive);
     comm(AD5592R_CMD_NOP, receive);
 
-    /* Verwirft das erste Nibble */
+    /* Discard the first nibble */
     uint16_t temp_raw = ((receive[0] << 8) & 0x0F00) | (receive[1] & 0xFF);
 
     new_vref_source = _vref_source;
@@ -725,7 +722,7 @@ uint16_t AD5592R::temperature_sample_get()
     comm(AD5592R_CMD_NOP, receive);
     comm(AD5592R_CMD_NOP, receive);
 
-    /* Verwirft das erste Nibble */
+    /* Discard the first nibble */
     uint16_t result = ((receive[0] << 8) & 0x0F00) | (receive[1] & 0xFF);
 
     return result;
