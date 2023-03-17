@@ -1,3 +1,16 @@
+/**
+ * @file AD5592.h
+ * @author Daniel (dzalf) based on /github.com/Metaln00b version
+ * @brief Class abstraction layer for the AD5592R 12-bit ADC/DAC/Port Expander
+ * @version and
+ * @date 0.1-alpha  May 2020 - Converted implementation into a Class
+ *       0.2        Sep 2020 - Added more applicability examples
+ *       0.3        Jan 2021 - Tested on Teensy 3.6
+ *       0.4        ??       - Long hiatus
+ *       0.5        Mar 2023 - Updated, clenaed it and commited to GH
+ *
+ * @copyright Copyright (c) 2023
+ */
 
 #pragma once
 
