@@ -22,7 +22,7 @@
 #include <SPI.h>
 
 // Members
-typedef uint16_t                    ad5592r_word;
+typedef uint16_t                    AD5592R_word;
 
 /*******************************************************************************
  * Datatypes                                                                   *
