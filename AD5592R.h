@@ -7,7 +7,7 @@
  *       0.2        Sep 2020 - Added more applicability examples
  *       0.3        Jan 2021 - Tested on Teensy 3.6
  *       0.4        ??       - Long hiatus
- *       0.5        Mar 2023 - Updated, clenaed it and commited to GH
+ *       0.5        Mar 2023 - Updated, cleaned it and committed to GH
  *
  * @copyright Copyright (c) 2023
  */
@@ -22,7 +22,7 @@
 #include <SPI.h>
 
 // Members
-typedef uint16_t                    ad5592r_word;
+typedef uint16_t                    AD5592R_word;
 
 /*******************************************************************************
  * Datatypes                                                                   *
