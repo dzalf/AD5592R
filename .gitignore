@@ -1,3 +1,4 @@
 #Arduino project files
-*.ino
+# Ignore .ino from Arduino testing but let the example files be synced
+AD5592R.ino
 *.txt

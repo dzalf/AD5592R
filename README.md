@@ -18,4 +18,5 @@ Note: My original [fork](https://github.com/dzalf/Arduino-libad5592r) simply imp
 
 - [x] Invite @Metaln00b as a collaborator just to get _their_ blessing/approval
 - [x] Translate German comments to English (if @Metaln00b agrees)
+- [x] Add examples folder
 - [ ] Make Tindie page for my little Dev Boards (this was a surprise I have been working on :wink:)
